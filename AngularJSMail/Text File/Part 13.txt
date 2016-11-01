@@ -1,0 +1,48 @@
+
+Part13:- Difference between $scope and $rootScope  N cancel route change 
+
+1) $rootScope is available globally (for all controllers), whereas $scope is only available to the controller that has created it and it's children. 
+
+
+
+how to cancel route change in Angular:-
+This is extremely useful if you want to warn a user when they are navigating away from a page with unsaved changes. 
+
+
+.controller("studentsController", function ($http, $route, $scope) {
+    var vm = this;
+
+    $scope.$on("$routeChangeStart", function (event, next, current) {
+        if (!confirm("Are you sure you want to navigate away from this page")) {
+            event.preventDefault();
+        }
+    });
+
+    vm.reloadData = function () {
+        $route.reload();
+    }
+
+    $http.get("StudentService.asmx/GetAllStudents")
+                .then(function (response) {
+                    vm.students = response.data;
+                })
+
+})
+
+
+When route navigation occurs in an Angular application, the following events are triggered
+1. $locationChangeStart
+2. $routeChangeStart
+3. $locationChangeSuccess
+4. $routeChangeSuccess
+
+
+$locationChangeStart: this uses the $location provider and broadcast whenever the URL change, location refers more to a Path of a specific URL it's more like plain javascript, you can change to any path in your application and it doesn't matter if defined on your app as route or state.
+
+$routeChangeStart: this uses the $route provider, and it's the same broadcast when the route change (default Angular router used with ngRoute) this is used to do a link between controllers and views.
+
+$log service:-
+log the events.
+eg:-$log.debug("RouteChangeStart Event");
+
+

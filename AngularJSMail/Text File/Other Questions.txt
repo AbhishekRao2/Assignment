@@ -1,0 +1,365 @@
+What should be the maximum number of concurrent “watches”? Bonus: How would you keep an eye on that number?
+:- 2,000. A utility called ng-stats can help track your watch count and digest cycles.
+
+
+How do you share data between controllers?
+Create an AngularJS service that will hold the data and inject it inside of the controllers.
+Using a service is the cleanest, fastest and easiest way to test.
+However, there are couple of other ways to implement data sharing between controllers, like:
+– Using events
+– Using $parent, nextSibling, controllerAs, etc. to directly access the controllers
+– Using the $rootScope to add the data on.
+
+
+What is the difference between ng-show/ng-hide and ng-if directives?
+ng-show/ng-hide will always insert the DOM element, but will display/hide it based on the condition. ng-if will not insert the DOM element until the condition is not fulfilled.
+ng-if is better when we needed the DOM to be loaded conditionally, as it will help load page bit faster compared to ng-show/ng-hide.
+
+
+What is a digest cycle in AngularJS?
+In each digest cycle Angular compares the old and the new version of the scope model values. The digest cycle is triggered automatically. We can also use $apply() if we want to trigger the digest cycle manually. 
+
+Where should we implement the DOM manipulation in AngularJS?
+In the directives. DOM Manipulations should not exist in controllers, services or anywhere else but in directives. 
+
+
+
+Is it a good or bad practice to use AngularJS together with jQuery?
+
+It is definitely a bad practice. We need to stay away from jQuery and try to realize the solution with an AngularJS approach. jQuery takes a traditional imperative approach to manipulating the DOM, and in an imperative approach, it is up to the programmer to express the individual steps leading up to the desired outcome.
+
+
+If you were to migrate from Angular 1.4 to Angular 1.5, what is the main thing that would need refactoring?
+Changing .directive to .component to adapt to the new Angular 1.5 components
+
+
+How would you specify that a scope variable should have one-time binding only?
+By using “::” in front of it. This allows the check if the candidate is aware of the available variable bindings in AngularJS.
+
+
+What is the difference between one-way binding and two-way binding?
+
+Explain how $scope.$apply() works
+$scope.$apply re-evaluates all the declared ng-models and applies the change to any that have been altered (i.e. assigned to a new value)
+Explanation: $scope.$apply() is one of the core angular functions that should never be used explicitly, it forces the angular engine to run on all the watched variables and all external variables and apply the changes on their values
+
+
+What directive would you use to hide elements from the HTML DOM by removing them from that DOM not changing their styling?
+The ngIf Directive, when applied to an element, will remove that element from the DOM if it’s condition is false. 
+
+
+What makes the angular.copy() method so powerful?
+It creates a deep copy of the variable.
+A deep copy of a variable means it doesn’t point to the same memory reference as that variable. Usually assigning one variable to another creates a “shallow copy”, which makes the two variables point to the same memory reference. Therefore if we change one, the other changes as well
+
+
+
+How would you make an Angular service return a promise?
+The $q library is a helper provider that implements promises and deferred objects to enable asynchronous functionality
+
+
+What is the role of services in AngularJS and name any services made available by default?
+– AngularJS Services are objects that provide separation of concerns to an AngularJS app.
+– AngularJS Services can be created using a factory method or a service method.
+– Services are singleton components. All components of the application (into which the service is injected) will work with single instance of the service.
+– An AngularJS service allows developing of business logic without depending on the View logic which will work with it.
+
+
+
+
+
+Few of the inbuilt services in AngularJS are:
+– the $http service: The $http service is a core Angular service that facilitates communication with the remote HTTP servers via the browser’s XMLHttpRequest object or via JSONP
+– the $log service: Simple service for logging. Default implementation safely writes the message into the browser’s console
+– the $anchorScroll: it scrolls to the element related to the specified hash or (if omitted) to the current value of $location.hash()
+Why should one know about AngularJS Services, you may ask. Well, understanding the purpose of AngularJS Services helps bring modularity to AngularJS code.
+Services are the best may to evolve reusable API within and AngularJS app
+Overview:
+    AngularJS Services help create reusable components.
+    A Service can be created either using the service() method or the factory() method.
+    A typical service can be injected into another service or into an AngularJS Controller.
+
+
+
+
+
+When creating a directive, it can be used in several different ways in the view. Which ways for using a directive do you know? How do you define the way your directive will be used?
+When you create a directive, it can be used as an attribute, element or class name. To define which way to use, you need to set the restrict option in your directive declaration.
+The restrict option is typically set to:
+‘A’ – only matches attribute name
+‘E’ – only matches element name
+‘C’ – only matches class name
+These restrictions can all be combined as needed:
+‘AEC’ – matches either attribute or element or class name
+
+
+
+
+
+When should you use an attribute versus an element?
+Use an element when you are creating a component that is in control of the template. Use an attribute when you are decorating an existing element with new functionality.
+This topic is important so developers can understand the several ways a directive can be used inside a view and when to use each way. 
+
+
+
+
+How do you reset a $timeout, $interval(), and disable a $watch()?
+To reset a timeout and/or $interval, assign the result of the function to a variable and then call the .cancel() function.
+
+
+
+Explain what is a $scope in AngularJS?
+Scope is an object that refers to the application model. It is an execution context for expressions. Scopes are arranged in hierarchical structure which mimic the DOM structure of the application. Scopes can watch expressions and propagate events. Scopes are objects that refer to the model. They act as glue between controller and view.
+
+
+
+What is DDO Directive Definition Object?
+DDO is an object used while creating a custome directive.
+
+
+
+What is a singleton pattern and where we can find it in Angularjs?
+Is a great pattern that restricts the use of a class more than once. We can find singleton pattern in angular in dependency injection and in the services.
+
+
+
+
+What is an interceptor? What are common uses of it?
+An interceptor is a middleware code where all the $http requests go through.
+The interceptor is a factory that are registered in $httpProvider. You have 2 types of requests that go through the interceptor, request and response (with requestError and responseError respectively). This piece of code is very useful for error handling, authentication or middleware in all the requests/responses.
+
+
+How would you programatically change or adapt the template of a directive before it is executed and transformed?
+You would use the compile function. The compile function gives you access to the directive’s template before transclusion occurs and templates are transformed, so changes can safely be made to DOM elements. This is very useful for cases where the DOM needs to be constructed based on runtime directive parameters.
+
+
+
+
+How would you validate a text input field for a twitter username, including the @ symbol?
+You would use the ngPattern directive to perform a regex match that matches Twitter usernames. The same principal can be applied to validating phone numbers, serial numbers, barcodes, zip codes and any other text input.
+
+
+
+How would you implement application-wide exception handling in your Angular app?
+Angular has a built-in error handler service called $exceptionHandler which can easily be overriden 
+
+
+
+
+How do you hide an HTML element via a button click in AngularJS?
+You can do this by using the ng-hide directive in conjunction with a controller we can hide an HTML element on button click.
+
+
+
+How would you react on model changes to trigger some further action? For instance, say you have an input text field called email and you want to trigger or execute some code as soon as a user starts to type in their email.
+We can achieve this using $watch function in our controller.
+
+
+
+
+How do you disable a button depending on a checkbox’s state?
+We can use the ng-disabled directive and bind its condition to the checkbox’s state.
+
+
+
+Common ways to communicate between modules of your application using core AngularJS functionality include:
+    Using services
+    Using events
+    By assigning models on $rootScope
+    Directly between controllers, using $parent, $$childHead, $$nextSibling, etc.
+    Directly between controllers, using ControllerAs, or other forms of inheritance
+
+
+
+
+
+
+
+Explain what is Angular Expression? Explain what is key difference between angular expressions and JavaScript expressions?
+Like JavaScript,  Angular expressions are code snippets that are usually placed in binding such as {{ expression }}
+The key difference between the JavaScript expressions and Angular expressions
+Context : In Angular, the expressions are evaluated against a scope object, while the Javascript expressions are evaluated against the global window
+Forgiving: In Angular expression evaluation is forgiving to null and undefined, while in Javascript undefined properties generates TypeError or ReferenceError
+No Control Flow Statements: Loops, conditionals or exceptions cannot be used in an angular expression
+Filters: To format data before displaying it you can use filters
+
+
+
+With options on page load how you can initialize a select box ?
+You can initialize a select box with options on page load by using ng-init directive
+    <div ng-controller = “ apps/dashboard/account ” ng-switch
+    On = “! ! accounts” ng-init = “ loadData ( ) ”>
+
+
+
+
+Explain what is string interpolation in Angular.js ?
+In Angular.js the compiler during the compilation process matches text and attributes using interpolate service to see if they contains embedded expressions.  As part of normal digest cycle these expressions are updated and registered as watches.
+
+
+
+Mention the steps for the compilation process of HTML happens?
+Compilation of HTML process occurs in following ways
+    Using the standard browser API, first the HTML is parsed into DOM
+    By using the call to the $compile () method, compilation of the DOM is performed.  The method traverses the DOM and matches the directives.
+    Link the template with scope by calling the linking function returned from the previous step
+
+
+
+Explain what is linking function and type of linking function?
+Link combines the directives with a scope and produce a live view.  For registering DOM listeners as well as updating the DOM, link function is responsible. After the template is cloned it is executed.
+    Pre-linking function: Pre-linking function is executed before the child elements are linked.  It is not considered as the safe way for DOM transformation.
+    Post linking function: Post linking function is executed after the child elements are linked. It is safe to do DOM transformation by post-linking function
+
+
+
+Mention what are the styling form that ngModel adds to CSS classes ?
+ngModel adds these CSS classes to allow styling of form as well as control
+    ng- valid
+    ng- invalid
+    ng-pristine
+    ng-dirty
+
+
+
+
+Explain what is injector?
+An injector is a service locator.  It is used to retrieve object instances as defined by provider, instantiate types, invoke methods and load modules.  There is a single injector per Angular application, it helps to look up an object instance by its name.
+
+
+
+
+
+
+Explain what is the difference between link and compile in Angular.js?
+    Compile function: It is used for template DOM Manipulation and collect all of the directives.
+    Link function: It is used for registering DOM listeners as well as instance DOM manipulation. It is executed once the template has been cloned.
+
+
+
+
+Explain the concept of scope hierarchy?  How many scope can an application have?
+Each angular application consist of one root scope but may have several child scopes. As child controllers and some directives create new child scopes, application can have multiple scopes. When new scopes are formed or created they are added as a children of their parent scope. Similar to DOM, they also creates a hierarchical structure.
+
+
+
+
+How to validate data in AngularJS?
+AngularJS enriches form filling and validation. We can use $dirty and $invalid flags to do the validations in seamless way. Use novalidate with a form declaration to disable any browser specific validation.
+Following can be used to track error.
+    $dirty - states that value has been changed.
+   $invalid - states that value entered is invalid.
+    $error - states the exact error.
+
+
+
+
+
+What is constant?
+constants are used to pass values at config phase considering the fact that value cannot be used to be passed during config phase.
+
+
+What is provider?
+provider is used by AngularJS internally to create services, factory etc. during config phase(phase during which AngularJS bootstraps itself). Below mention script can be used to create MathService that we've created earlier. Provider is a special factory method with a method get() which is used to return the value/service/factory.
+
+
+
+
+
+How to implement internationalization in AngularJS?
+AngularJS supports inbuilt internationalization for three types of filters currency, date and numbers. We only need to incorporate corresponding js according to locale of the country. By default it handles the locale of the browser. For example, to use Danish locale, use following script
+<script src = "https://code.angularjs.org/1.2.5/i18n/angular-locale_da-dk.js"></script> 
+
+
+
+
+
+How many types of data binding in AngularJS?
+AngularJs support one-way binding as well as two-way binding.
+
+
+
+What is Representational State Transfer(REST) in AngularJS.
+REST is a style of API that operates over HTTP requests. The requested URL identifies the data to be operated on, and the HTTP method identifies the operation that is to be performed. REST is a style of API rather than a formal specification, and there is a lot of debate and disagreement about what is and isn’t RESTful, a term used to indicate an API that follows the REST style. AngularJS is pretty flexible about how RESTful web services are consumed. You should use the services that I describe in this article when you are performing data operations on a RESTful API. You may initially prefer to use the $http service to make Ajax requests, especially if you are coming from a jQuery background. To that end, I describe the use of $http at the start of the article, before explaining its limitations when used with REST and the advantages of using the $resource service as an alternative. For this, we first need to create a RESTful web API.
+A REST web service is said to be RESTful when it adheres to the following constrants:
+    It’s URL-based (e.g., http://www.micbutton.com/rs/blogPost).
+    It uses an Internet media type such as JSON for data interchange.
+    It uses standard HTTP methods (GET, PUT, POST, DELETE).
+
+HTTP methods have a particular purpose when used with REST services. The following is the standard way that HTTP methods should be used with REST services,
+
+
+
+
+Explain ng-Switch Directive in AngularJS.
+This directive is used to swap DOM structure conditionally in our template based on a scope expression. ngSwitchWhen or ngSwitchDefault directives are used to show and hide the element within ngSwitch directive. We can show or hide the element inside this directive and are required to place a "when" attribute per element. The "when" attribute is used to inform the ngSwitch directive which element is to display based on expression, if the matching expression is found, the element is displayed, else it is hidden.
+
+
+
+
+
+Why to use AngularJS Global Object services?
+The main reason that AngularJS includes these services is to make testing easier, but an important facet of unit testing is the need to isolate a small piece of code and test its behavior without testing the components it depends on—in essence, creating a focused test. The DOM API exposes functionality through global objects such as document and window.
+These objects make it hard to isolate code for unit testing without also testing the way that the browser implements its global objects. Using services such as $document allows AngularJS code to be written without directly using the DOM API global objects and allows the use of AngularJS testing services to configure specific test scenarios.
+
+
+
+
+Explain Provider Method in AngularJS.
+The Module.provider method allows you to take more control over the way that a service object is created or configured. The arguments to the provider method are the name of the service that is being defined and a factory function. The factory function is required to return a provider object that defines a method called $get, which in turn is required to return the service object. When the service is required, AngularJS calls the factory method to get the provider object and then calls the $get method to get the service object. Using the provider method doesn’t change the way that services are consumed, which means that I don’t need to make any changes to the controller or directive in the example.
+The advantage of using the provider method is that you can add functionality to the provider method that can be used to configure the service object.
+
+
+
+
+What is event handling in AngularJS?
+When we want to create advanced AngularJS applications such as User Interaction Forms, then we need to handle DOM events like mouse clicks, moves, keyboard presses, change events and so on. AngularJS has a simple model for how to add event listeners. We can attach an event listener to an HTML element using one of the following AngularJS event listener directives.
+    ng-click
+    ng-dbl-click
+    ng-mousedown
+    ng-mouseup
+    ng-mouseenter
+    ng-mouseleave
+    ng-mousemove
+    ng-mouseover
+    ng-keydown
+    ng-keyup
+    ng-keypress
+    ng-change
+
+
+
+
+What are animating elements in AngularJS?
+The $animate service allows you to provide transition effects when elements are added, removed, or moved in the DOM. The $animate service doesn’t define any animations itself but relies on the CSS3 animation and transition features. Animations can be a useful means of drawing the user’s attention to an important change in the layout of an application, making the transition from one state to another less jarring. Many developers treat animations as an outlet for their frustrated artistic ambition and ladle on as many as possible. The results can be annoying, especially for the user who has to endure endless special effects every time they perform a task. For a line-of-business application, where the user could be repeating the same set of actions all day, the effect is demoralizing beyond description. Animations should be subtle, brief, and quick. The goal is to draw the user’s attention to the fact that something has changed. Use animations consistently, cautiously, and—above all—sparingly.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

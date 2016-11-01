@@ -1,0 +1,137 @@
+
+Prerequisites:-
+basic understanding of JavaScript and any text editor.
+understanding of other web technologies such as HTML, CSS, AJAX, etc.
+
+
+
+
+
+Why AngularJS:-
+1) Dependency Injection
+	Dependency Injection is something AngularJS does quite well. 
+	http://anandmanisankar.com/posts/angularjs-dependency-injection-demystified/
+
+2) Two Way Data-Binding
+	One of the most useful feature in AngularJS is the Two Way Data-Binding. The Two Way Data-Binding, keeps the model and the view in sync at all times, that is a change in the model updates the view and a change in the view updates the model. 
+	http://codepen.io/SitePoint/pen/bNmzdO
+	Angular templates work differently. First the template (which is the uncompiled HTML along with any additional markup or directives) is compiled on the browser. The compilation step produces a live view. Any changes to the view are immediately reflected in the model, and any changes in the model are propagated to the view. 
+
+
+3) Testing
+	 Testing is an area where Angular really shines. Angular is designed with testing in mind right from the start. Angular makes it very easy to test any of it's components through both unit testing and end to end testing. So there's really no excuse for not testing any of your angular application code.
+	http://andyshora.com/unit-testing-best-practices-angularjs.html
+	https://docs.angularjs.org/guide/unit-testing
+	https://scotch.io/tutorials/testing-angularjs-with-jasmine-and-karma-part-1
+	
+4) Model View Controller
+	With angular it is very easy to develop applications in a clean MVC way. All you have to do is split your application code into MVC components. The rest, that is managing those components and connecting them together is done by angular.
+
+
+5) DOM manipulations
+	https://www.youtube.com/watch?v=bk-CC61zMZk
+
+6) Write less code
+
+7) Flexibility with filters
+
+and many more
+
+Other Reasons:-
+1) Client side Script so less load on server.
+2) Angular is built and maintained by dedicated Google engineers.
+.....
+
+AngularJS vs. Backbone.js vs. Ember.js
+https://www.airpair.com/js/javascript-framework-comparison
+https://www.google.com/trends/explore?date=all&q=ember.js,angularjs,backbone.js&hl=en-US	(google trend)
+
+Angular vs. Knockout: Similarities and Fundamental Differences
+https://www.devbridge.com/articles/angular-vs-knockout-similarities-and-fundamental-differences/
+
+
+Angular vs Node
+1) Jquery and angular are basically client-side frameworks. You know they do the magical stuff inside your browser, while node.js runs on the server.
+2) Node.js can function with other front-end toolset(s) such as AngularJS.
+3) With event-driven, non-blocking I/O model, it offers efficiency which is ideal for data-intensive real-time applications that run across distributed devices
+
+Event-Driven:-
+For those familiar with client-side JavaScript development, think of all the
+.on*() methods, such as element.onclick(), that are used in conjunction with DOM Elements to convey user interaction. This pattern works well when a
+single item can emit many possible events. Node uses this pattern in the form of the EventEmitter, and is located in places such as Server, Socket and
+the 'http' module. It's useful when we need to emit more than one type of state change from a single instance.
+
+Non-blocking I/O model:-
+http://stackoverflow.com/questions/14795145/how-the-single-threaded-non-blocking-io-model-works-in-node-js
+https://www.youtube.com/watch?v=ztspvPYybIY
+
+4) http://www.vemployee.com/blog/angularjs-vs-node-js-vs-ext-js-the-real-difference/
+
+
+
+
+
+
+Other Question:-
+What, if browser has javascript disabled?
+Yes you are thinking correct AngularJS wont work. Your application wont work.
+
+
+Not everyone’s browser supports JavaScript. Let everyone see all of your content and use your app without needing to execute code in the browser.
+The world has changed since these concepts were born. Point #1 is no longer true for any interesting population. If you’re running a browser without JavaScript, you’re relegated to sites created in the 1990s
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+What is AngularJS:-
+1) AngularJS is a JavaScript framework that helps build applications that run in a web browser. 
+2) AngularJS is an open source project, which means it can be be freely used, changed, and shared by anyone.
+3) AngularJS is an excellent framework for building both Single Page Applications (SPA) and Line of Business Applications.
+
+Single Page Applications:-
+A single-page application (SPA) is a web application or web site that fits on a single web page with the goal of providing a more fluid user experience similar to a desktop application. In a SPA, either all necessary code – HTML, JavaScript, and CSS – is retrieved with a single page load, or the appropriate resources are dynamically loaded and added to the page as necessary, usually in response to user actions. The page does not reload at any point in the process, nor does control transfer to another page, although the location hash can be used to provide the perception and navigability of separate logical pages in the application. Interaction with the single page application often involves dynamic communication with the web server behind the scenes.
+
+Line of Business Applications:-
+1) 90% of all software is written by a company for private use within that company. 
+2) An LOB application is one of the set of critical computer applications that are vital to running an enterprise. LOB applications are usually large programs that contain a number of integrated capabilities and tie into databases and database management systems.
+3) http://www.codeproject.com/Articles/808213/Developing-a-Large-Scale-Application-with-a-Single
+
+Releases:-
+Angular 1
+  The current stable release of AngularJS is 1.5.7.
+
+Angular 2
+
+
+
+History:-
+AngularJS was born in 2009 as a part of a larger commercial product, called GetAngular. Shortly after, Misko Hevery, one of the engineers who founded GetAngular, managed to recreate a web application that consisted of 17 thousand lines of code and took 6 months to develop in a mere 3 weeks using just GetAngular. Reducing the size of the application to just about 1,000 lines of code convinced Google to start sponsoring the project, turning it into the open-source AngularJS we know today. Amongst Angular's unique and innovative features are two-way data bindings, dependency injection, easy-to-test code and extending the HTML dialect by using directives.
+
+
+
+
+
+
+
+
+
+
+
+

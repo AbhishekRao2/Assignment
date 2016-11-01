@@ -1,0 +1,46 @@
+
+part10:- Remove # from URL N default route N caseInsensitiveMatch N Inline Templates.
+
+Step 1 : Enable html5mode routing. To do this inject $locationProvider into config() function in script.js and call html5Mode() method passing true as the argument value. 
+Step 2 : In index.html, remove # symbols from all the links. 
+Step 3 : Include the following URL rewrite rule in web.config. This rewrite rule, rewrites all urls to index.html, except if the request is for a file, or a directory or a Web API request.
+Step 4 : Set the base href to the location of your single page application. In the head section of index.html include the following line.
+<base href="/" />
+
+
+
+At the moment the problem is that, if you try to navigate to a route that is not configured, you will see only the layout page without any partial template injected into it.
+
+How to configure the default route in Angular :
+.otherwise({
+    redirectTo: "/home"
+})
+
+
+
+
+caseInsensitiveMatch : 
+The routes that are configured using config function are case sensitive by default.
+To make the route case-insensitive set caseInsensitiveMatch property to true as shown below.
+ $routeProvider
+    .when("/students", {
+                        templateUrl: "Templates/students.html",
+                        controller: "studentsController",
+                        caseInsensitiveMatch: true
+                    })
+
+
+To make all routes case-insensitive set caseInsensitiveMatch property on $routeProvider.
+$routeProvider.caseInsensitiveMatch = true;
+
+
+
+
+Inline Template:-
+ $routeProvider
+    .when("/home", {
+        template: "<h1>Inline Template in action</h1>",
+        controller: "homeController",
+        controllerAs: "homeCtrl"
+    })
+

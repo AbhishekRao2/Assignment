@@ -1,0 +1,859 @@
+
+***** Setup Single Page Application *****
+
+Step 1:- file-> new-> Project-> Templates-> Web-> ASP.NET Web Application -> web API -> OK
+
+step2:- 
+Add angular.min.js and angular-route.min.js library in "Scripts" folder.
+Create a SPA folder inside ~/Scripts folder where we will keep our SPA related script files.
+
+step3:- Create PersonalDetailsController.js file (javascript file) under ~/Scripts/SPA folder where we will write all our application related javascript code (AngularJS, jQuery, http-route modules etc.)
+
+step4:- In the root of the project, create SPA folder and under that PD folder where we will keep our Single Page Application related html files (view files)
+
+
+
+
+
+
+
+
+***** Single Page Application Template *****
+
+step1:- go to ~/SPA folder and create Index.html page.
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Neosoft - Single Page Application</title>
+
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="/Content/Site.css" rel="stylesheet" />
+    <script src="/Scripts/angular.min.js"></script>
+    <script src="/Scripts/angular-route.min.js"></script>
+    <script src="/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/SPA/PersonalDetailsController.js"></script>
+    <style>
+        #divLoading {  
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            z-index:1000;
+            background-color:#ddffdc;
+            opacity: .8;
+            content: 'Loading...';
+         }
+
+        .loading {
+            position: absolute;
+            left: 40%;
+            top: 50%;
+            margin-left: -32px;
+            margin-top: -32px; 
+            display: block;    
+            color:black;
+        }
+    </style>
+</head>
+<body ng-app="app" ng-controller="SPAController">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" title="SPA - Neosoft" class="navbar-brand">SPA - Neosoft</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#/">Home</a></li>
+                    <li><a href="#/PD">Personal Details</a></li>
+                    <li><a href="#/about">About us</a></li>
+                    <li><a href="#/contact">Contact us</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <h1>{{Title}}</h1>
+        <div id="divLoading" ng-show="loading" style="font-size:50px;">
+            <div class="loading" >
+                Loading .....
+            </div>
+        </div>
+        <div ng-view></div>
+        <hr />
+        <footer>
+            <p>&copy; Developed by Brijkishor Tiwari from <a href="http://www.neosofttech.com" target="_blank">http://www.neosofttech.com</a>.</p>
+        </footer>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*****  DATABASE STRUCTURE  *****
+
+step1:-
+CREATE TABLE [dbo].[PersonalDetails] (
+    [AutoId]    INT          IDENTITY (1, 1) NOT NULL,
+    [FirstName] VARCHAR (50) NULL,
+    [LastName]  VARCHAR (50) NULL,
+    [Age]       INT          NULL,
+    [Active]    BIT          NULL,
+    PRIMARY KEY CLUSTERED ([AutoId] ASC)
+);
+
+
+step2:- 
+WEB.CONFIG UPDATE:-
+ <connectionStrings>
+    <add name="DefaultConnection" connectionString="Data Source=.;Initial Catalog=AngularJsSPA;Integrated Security=True" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+
+
+step3:- 
+Creating ASP.NET Web API Model 
+Models folder -> PersonalDetail.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace WebApplication1.Models
+{
+    public class PersonalDetail
+    {
+        [Key]
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity)]
+        public int AutoId { get; set; }
+
+        [StringLength(20, MinimumLength = 4, ErrorMessage = "Must be at least 4 characters long.")]
+        [Display(Name= "First Name")]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "Please write your LastName")]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        public int? Age { get; set; }
+
+        [Display(Name = "Is Active?")]
+        public bool? Active { get; set; }
+    }
+}
+
+
+    [Key] – Used to mark the property as Primary key
+    [DatabaseGenerated] – used to mark the field as database generated (auto increment field in the database) 
+    [StringLength] - used to limit the length of the characters allowed in this field 
+    [Required] – used to mark the property as mandatory 
+    [Display] – used to bring a description Label for the property when view is scaffold.
+
+
+
+
+
+
+
+Global.asax.cs change
+Add following line of the code under Application_Start() even:-
+System.Data.Entity.Database.SetInitializer<Namespace.Models.ApplicationDbContext>(null); 
+
+
+
+
+
+
+
+*****  API Ready *****
+
+step1:- ASP.NET Web API Controller code
+i) Right click the Controllers folder and select Add > Controller…
+ii) In the above dialog box, select “Web API 2 Controller with actions, using Entity Framework”.
+iii) Now select the Model class, Data context and Controller name. If we want to create asynchronous controller, then we need to check the “User async controller actions” checkbox.
+Clicking Add button adds a controller in the Controllers folder. Notice that this controller is inherited with ApiController class.
+ControllerName:- PersonalDetailsController
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
+using SinglePageWebApplication.Models;
+using WebApplication1.Models;
+
+namespace SinglePageWebApplication.Controllers
+{
+    public class PersonalDetailsController : ApiController
+    {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        // GET: api/PersonalDetails
+        public IQueryable<PersonalDetail> GetPersonalDetails()
+        {
+            return db.PersonalDetails;
+        }
+
+        // GET: api/PersonalDetails/5
+        [ResponseType(typeof(PersonalDetail))]
+        public async Task<IHttpActionResult> GetPersonalDetail(int id)
+        {
+            PersonalDetail personalDetail = await db.PersonalDetails.FindAsync(id);
+            if (personalDetail == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(personalDetail);
+        }
+
+        // PUT: api/PersonalDetails/5
+        [ResponseType(typeof(void))]
+        public async Task<IHttpActionResult> PutPersonalDetail(int id, PersonalDetail personalDetail)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != personalDetail.AutoId)
+            {
+                return BadRequest();
+            }
+
+            db.Entry(personalDetail).State = EntityState.Modified;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PersonalDetailExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        // POST: api/PersonalDetails
+        [ResponseType(typeof(PersonalDetail))]
+        public async Task<IHttpActionResult> PostPersonalDetail(PersonalDetail personalDetail)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            db.PersonalDetails.Add(personalDetail);
+            await db.SaveChangesAsync();
+
+            return CreatedAtRoute("DefaultApi", new { id = personalDetail.AutoId }, personalDetail);
+        }
+
+        // DELETE: api/PersonalDetails/5
+        [ResponseType(typeof(PersonalDetail))]
+        public async Task<IHttpActionResult> DeletePersonalDetail(int id)
+        {
+            PersonalDetail personalDetail = await db.PersonalDetails.FindAsync(id);
+            if (personalDetail == null)
+            {
+                return NotFound();
+            }
+
+            db.PersonalDetails.Remove(personalDetail);
+            await db.SaveChangesAsync();
+
+            return Ok(personalDetail);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private bool PersonalDetailExists(int id)
+        {
+            return db.PersonalDetails.Count(e => e.AutoId == id) > 0;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+***** Route Navigation *****
+
+Step1:- Add the below code in  PersonalDetailsController.js
+
+var app = angular.module("app", ['ngRoute']);
+
+// =====================================
+// configure the route navigation
+// =====================================
+app.config(function ($routeProvider) {
+    $routeProvider
+    .when('/',
+    {
+        templateUrl: '/SPA/home.html',
+        controller: 'HomeController'
+    })
+    .when('/about',
+    {
+        templateUrl: '/SPA/about.html',
+        controller: 'AboutController'
+    })
+    .when('/contact',
+    {
+        templateUrl: '/SPA/contact.html',
+        controller: 'ContactController'
+    })
+    .when('/PD',
+    {
+        templateUrl: '/SPA/PD/index.html',
+        controller: "PDController"
+    })
+    .when('/PD/Create',
+    {
+        templateUrl: '/SPA/PD/create.html',
+        controller: "PDControllerCreate"
+    })
+    .when('/PD/Edit/:id',
+    {
+        templateUrl: '/SPA/PD/edit.html',
+        controller: "PDControllerEdit"
+    })
+    .when('/PD/Details/:id',
+    {
+        templateUrl: '/SPA/PD/details.html',
+        controller: "PDControllerDetails"
+    })
+    .when('/PD/Delete/:id',
+    {
+        templateUrl: '/SPA/PD/delete.html',
+        controller: "PDControllerDelete"
+    })
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+***** CRUD Service  *****
+step1:- Add the below code in PersonalDetailsController.js
+
+// ===================================================
+// Angular Factory to create service to peform CRUD
+// ===================================================
+app.factory("PDService", function ($http) {
+    var thisPDService = {};
+
+    // get all data from database
+    thisPDService.GetAll = function () {
+        var promise = $http({
+            method: 'GET',
+            url: '/api/PersonalDetails'
+           })
+            .then(function (response) {
+                return response.data;
+            },
+            function (response) {
+                return response.data;
+            });
+        return promise;
+    };
+
+
+    // get single record from database
+    thisPDService.GetSingle = function (id) {
+        
+        var promise = $http({
+            method: 'GET',
+            url: '/api/PersonalDetails/'+ id
+        })
+            .then(function (response) {
+                return response.data;
+            },
+            function (response) {
+                return response.data;
+            });
+        return promise;
+    };
+
+
+    // post the data from database
+    thisPDService.Insert = function (firstName, lastName, age, active) {
+        var personalDetail = {
+            FirstName: firstName,
+            LastName: lastName,
+            Age: age,
+            Active: active,
+        };
+        
+        var promise = $http({
+            method: 'POST',
+            url: '/api/PersonalDetails',
+            data: personalDetail
+        })
+        .then(function (response) {
+            return response.statusText;
+        },
+        function (response) {
+            return response.statusText;
+        });
+
+        return promise;
+    };
+
+    // put the data from database
+    thisPDService.Update = function (autoId, firstName, lastName, age, active) {
+        var personalDetail = {
+            AutoId : autoId,
+            FirstName: firstName,
+            LastName: lastName,
+            Age: age,
+            Active: active,
+        };
+
+        var promise = $http({
+            method: 'PUT',
+            url: '/api/PersonalDetails/'+ autoId,
+            data: personalDetail
+        })
+        .then(function (response) {
+            return "Updated";
+            // return response.statusText + ' ' + response.status + ' ' + response.data;
+        },
+        function (response) {
+            return response.statusText + ' ' + response.status + ' ' + response.data;
+        });
+
+        return promise;
+    };
+
+    // delete the data from database
+    thisPDService.Remove = function (autoId) {
+        var promise = $http({
+            method: 'DELETE',
+            url: '/api/PersonalDetails/' + autoId
+        })
+        .then(function (response) {
+            // return "Deleted";
+            return response.statusText + ' ' + response.status + ' ' + response.data;
+        },
+        function (response) {
+            return response.statusText + ' ' + response.status + ' ' + response.data;
+        });
+
+        return promise;
+    };
+
+    return thisPDService;
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+***** Single Page Application view pages *****
+Step1:- Create following HTML Page
+    SPA Folder --> PD Folder --> 
+            create.html - help us to render a HTML form to create a new record into the database
+            delete.html - help us to delete a record from the database
+            details.html - show details of a single record from the database
+            edit.html - help us to edit a record to the database
+            index.html - help us to list all records from the database
+
+    SPA Folder -->
+        about.html - show about details of the application / compnay
+        contact.html - show contact details
+        home.html - Landing page of the Single Page Application section
+
+
+
+Step2:- home.html
+
+
+<h1>{{Title}}</h1>
+<p>
+    Established in 1996 Neosoft Technologies is a complete IT solutions company, providing software development and IT services to corporations worldwide. Neosoft's world-class offshore services offer cutting-edge IT solutions across a range of industry and technology segments to Enterprises and Independent Software Vendors (ISVs).
+</p>
+<h2>Technology used</h2>
+<ul>
+    Microsoft Technologies
+    Open source
+    Java J2EE Development
+    Mobile Applications
+    C/C++
+    Database Development
+</ul>
+<br />
+<b>Click on <i>Personal Details</i> menu at the top to proceed.</b>
+
+
+Step3:- contact.html
+
+
+<h1>{{Title}}</h1>
+<p>
+    Mumbai (Head Office)
+    NeoSOFT Technologies
+    4th Floor, The Ruby,
+    29, Senapati Bapat Marg,
+    Dadar (West)
+    Mumbai- 400028
+    INDIA
+    Tele
+    : +91 22 40500600
+    Fax
+    : +91 22 40500695
+    Email
+    : india@neosofttech.com
+
+</p>
+
+
+
+
+step4:- about.html
+
+<h1>{{Title}}</h1>
+<p class="jumbotron">
+    Nalanda  was an acclaimed Mahavihara, a large Buddhist monastery in the ancient kingdom of Magadha (modern-day Bihar) in India. The site is located about 95 kilometres (59 mi) southeast of Patna near the town of Bihar Sharif, and was a centre of learning from the seventh century BC to c.?1200 CE. It is a UNESCO World Heritage Site
+
+    The highly formalized methods of Vedic learning helped inspire the establishment of large teaching institutions such as Taxila, Nalanda, and Vikramashila which are often characterised as India's early universities. Nalanda flourished under the patronage of the Gupta Empire in the 5th and 6th centuries and later under Harsha, the emperor of Kannauj.
+</p>
+
+
+
+
+step5:- Add the following script files inside Scripts folder.
+angular.min.js
+angular-route.min.js
+
+
+
+
+
+
+
+
+
+
+
+
+*****  Creating AngularJS controllers for main pages   *****
+
+Step1:- Paste the following code in PersonalDetailsController.js
+
+// ===================================================
+// Create other controllers for respective pages
+// ===================================================
+
+// default controller
+app.controller("SPAController", function ($scope, $rootScope) {
+    $scope.Title = "Welcome";
+    $rootScope.loading = false;
+});
+
+// Home controller
+app.controller("HomeController", function ($scope) {
+    $scope.Title = "Single Page Application (SPA)";
+});
+
+// About controller
+app.controller("AboutController", function ($scope) {
+    $scope.Title = "About us";
+});
+
+// Contact controller
+app.controller("ContactController", function ($scope) {
+    $scope.Title = "Contact us";
+});
+
+
+
+step2:- view page that exists at ~/SPA/PD/index.html
+
+<h1>{{Title}}</h1>
+<a href="#/PD/Create" title="Create new record">Create new</a>
+<table class="table table-striped table-responsive">
+    <tr>
+        <th>First Name</th><th>Last Name</th><th>Age</th><th>Active</th><th></th>
+    </tr>
+    <tr ng-repeat="d in PersonalDetails">
+        <td>{{d.FirstName}}</td><td>{{d.LastName}}</td><td>{{d.Age}}</td><td>{{d.Active}}</td>
+        <th><a href="#/PD/Edit/{{d.AutoId}}">Edit</a> | <a href="#/PD/Details/{{d.AutoId}}">Details</a></th>
+    </tr>
+</table>
+
+
+Step3:- Controller
+Single Page Application list view - controller code
+// PD - Index - PersonalDetails controller
+app.controller("PDController", function ($scope, PDService, $rootScope) {
+    $scope.Title = "Personal Details List";
+    $rootScope.loading = true;
+    $scope.GetPersonalDetails = PDService.GetAll().then(function (d) {
+        $scope.PersonalDetails = d;
+        $rootScope.loading = false;
+    });
+});
+
+
+
+step4:- Create view - View code
+<h2>{{Title}}</h2>
+
+<form ng-submit="Create()">
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="form-group">
+            <label class="control-label col-md-2">First Name</label>
+            <div class="col-md-10">
+                <input type="text" name="FirstName" required class="form-control" ng-model="firstName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Last Name</label>
+            <div class="col-md-10">
+                <input type="text" name="LastName" required class="form-control" ng-model="lastName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Age</label>
+            <div class="col-md-10">
+                <input type="number" name="Age" required class="form-control" ng-model="age" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Active</label>
+            <div class="col-md-10">
+                <input type="checkbox" name="Active" value="true" ng-model="active" /> Yes
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" /> 
+                <span class="text-success">{{CreateMessage}}</span>
+            </div>
+        </div>
+    </div>
+</form>
+<hr />
+<div><a href="#/PD">Back to List</a></div>
+
+
+step4:-  Controller
+// PD - Create - PersonalDetails controller
+app.controller("PDControllerCreate", function ($scope, PDService, $rootScope) {
+    $scope.Title = "Create - Personal Details";
+
+    $scope.Create = function () {
+        $rootScope.loading = true;
+        PDService.Insert($scope.firstName, $scope.lastName, $scope.age, $scope.active).then(function (d) {
+            $scope.CreateMessage = d;
+            $rootScope.loading = false;
+        });
+    };
+});
+
+
+
+step5:- Single Page Application details view - view code
+<h1>{{Title}}</h1>
+<dl>
+    <dd>First name:</dd>
+    <dt>{{Person.FirstName}}</dt>
+
+    <dd>Last name:</dd>
+    <dt>{{Person.LastName}}</dt>
+
+    <dd>Age:</dd>
+    <dt>{{Person.Age}}</dt>
+
+    <dd>Active:</dd>
+    <dt>{{Person.Active}}</dt>
+</dl>
+
+<hr />
+<a href="#/PD/Edit/{{Person.AutoId}}">Edit</a> | <a href="#/PD">Back to List</a> | <a href="#/PD/Create" title="Create new record">Create new</a> | 
+<a class="btn btn-danger" href="javascript:void(0)" ng-click="Delete()">Delete</a> <span class="text-danger">{{DeleteMessage}}</span>
+
+
+
+step6:- Single Page Application details view - Controller code
+// PD - Details/Delete - PersonalDetails controller
+app.controller("PDControllerDetails", function ($scope, PDService, $routeParams, $rootScope) {
+    $scope.Title = "Details - Personal Details";
+    $rootScope.loading = true;
+
+    $scope.GetSingle = PDService.GetSingle($routeParams.id).then(function (d) {
+        $scope.Person = d;
+        $rootScope.loading = false;
+    });
+    
+    $scope.Delete = function () {
+        var v = confirm('Are you sure to delete?');
+        if (v) {
+            $rootScope.loading = true;
+            PDService.Remove($routeParams.id).then(function (d) {
+                $scope.DeleteMessage = d;
+                $rootScope.loading = false;
+            });
+        }
+    };
+});
+
+
+
+
+step7:- Single Page Application Edit view - view code
+<h1>{{Title}}</h1>
+
+<form ng-submit="Update()">
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="form-group">
+            <label class="control-label col-md-2">First Name</label>
+            <div class="col-md-10">
+                <input type="text" name="FirstName" required class="form-control" ng-model="firstName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Last Name</label>
+            <div class="col-md-10">
+                <input type="text" name="LastName" required class="form-control" ng-model="lastName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Age</label>
+            <div class="col-md-10">
+                <input type="number" name="Age" required class="form-control" ng-model="age" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Active</label>
+            <div class="col-md-10">
+                <input type="checkbox" name="Active" value="true" ng-model="active" /> Yes
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-default" /> 
+                <span class="text-success">{{UpdateMessage}}</span>
+            </div>
+        </div>
+    </div>
+</form>
+<hr />
+<div><a href="#/PD">Back to List</a></div>
+
+
+
+step8:- Single Page Application Edit view - controller code
+// PD - Edit - PersonalDetails controller
+app.controller("PDControllerEdit", function ($scope, PDService, $routeParams, $rootScope) {
+    $scope.Title = "Edit - Personal Details";
+    $scope.RecordToEdit = $routeParams.id; // get the parameter
+
+    $rootScope.loading = true;
+    $scope.GetSingle = PDService.GetSingle($routeParams.id).then(function (d) {
+        $scope.firstName = d.FirstName;
+        $scope.lastName = d.LastName;
+        $scope.age = d.Age;
+        $scope.active = d.Active;
+        $rootScope.loading = false;
+    });
+
+    $scope.Update = function () {
+        $rootScope.loading = true;
+        PDService.Update($scope.RecordToEdit, $scope.firstName, $scope.lastName, $scope.age, $scope.active).then(function (d) {
+            $scope.UpdateMessage = d;
+            $rootScope.loading = false;
+        });
+    };
+});
+
+
+
+
+
+
+
+https://www.youtube.com/watch?v=D1HTzK92jqM	:- Unit testing Angular application in visual studio basic.
+Jasmine, Chutzpah 

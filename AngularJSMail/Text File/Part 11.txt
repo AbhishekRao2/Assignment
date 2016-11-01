@@ -1,0 +1,30 @@
+
+part11:- routeparams N controller as syntax 
+
+pass and retrieve parameters from URL in AngularJS:-
+1) When we navigate to /students, the list of student names must be displayed as hyperlinks.
+2) When we click on any student name, the respective student details should be displayed.
+	i) update webservice to get student based on id.
+	ii) studentDetailsController in script file.
+	iii) studentDetails.html page.
+	iv) routing for new url with parameter
+
+
+
+1)We have been using $scope to expose the members from the controller to the view.
+2) app.controller("mainController", function ($scope) {
+    $scope.message = "Hello Angular";
+	});
+we are attaching message property to $scope, which is automatically available in the view.
+3) <h1 ng-controller="mainController">{{message}}</h1>
+
+
+CONTROLLER AS syntax:-
+i) no need to inject $scope object in to the controller function
+ app.controller("mainController", function () {
+    this.message = "Hello Angular";
+});
+
+ii) In the view, you use, CONTROLLER AS syntax as shown below.
+<h1 ng-controller="mainController as main">{{main.message}}</h1>
+

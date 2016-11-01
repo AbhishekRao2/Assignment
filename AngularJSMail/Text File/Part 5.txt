@@ -1,0 +1,16 @@
+
+part5:- Sorting data N Search filter in AngularJS
+
+To sort the data in Angular
+1. Use orderBy filter
+    {{ orderBy_expression | orderBy : expression : reverse}}
+    Example : ng-repeat="employee in employees | orderBy:'salary':false"
+2. To sort in ascending order, set reverse to false
+3. To sort in descending order, set reverse to true
+4. You can also use + and - to sort in ascending and descending order respectively
+     Example : ng-repeat="employee in employees | orderBy:'+salary'"
+
+
+
+search only one specific column:-
+<input type="text" ng-model="searchText.city" placeholder="Search employees" />

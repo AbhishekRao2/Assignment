@@ -1,0 +1,2 @@
+Part14:-  route resolve 
+If your requirement is not to transition to the new route until all promises are resolved you can take advantage of the resolve property of the route.

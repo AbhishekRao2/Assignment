@@ -1,0 +1,64 @@
+
+
+Part 2:- Angular modules and controllers
+
+What is a module in AngularJS
+A module is a container for different parts of your application i.e controllers, services, directives, filters, etc. 
+You can think of a module as a Main() method in other types of applications.
+Modules declaratively specify how the angular application should be bootstrapped. 
+
+
+How to create a module:-
+Use the angular object's module() method to create a module. The angular object is provided by angular script. 
+var myApp = angular.module("myModule", [])
+
+The first parameter specifies the name of the module. 
+The second parameter specifies the dependencies for this module
+
+
+The angular.module is a global place for creating, registering and retrieving Angular modules. All modules (angular core or 3rd party) that should be available to an application must be registered using this mechanism.
+https://docs.angularjs.org/api/ng/function/angular.module
+
+
+
+
+
+
+What is a controller in angular
+In angular a controller is a JavaScript function. 
+The job of the controller is to build a model for the view to display. The controller does this by attaching the model to the scope.
+The scope is not the model, it's the data that you attach to the scope is the model. 
+The model is the data. In a real world application, the controller may call into a service to retrieve data from the database.
+
+
+
+
+
+How to create a controller in angular
+var myController = function ($scope) {
+    $scope.message = "AngularJS Tutorial";
+}
+
+In the following example, $scope is not the model. The message property that we have attached to the scope is the model.
+
+
+What is $scope
+$scope is a parameter that is passed to the controller function by angular framework
+With in the view, we can retrieve the data from the scope object and display.
+
+
+
+How to register the controller with the module
+Use module object's controller function to register the controller with the module
+myApp.controller("myController", myController);
+
+
+
+Example:-
+1) Basic
+2) Attaching complex objects to the scope
+3) What happens if a controller name is mis-spelled
+4) What happens if a property name in the binding expression is mis-spelled
+5) How to create module, controller and register the controller with the module, all in one line
+
+

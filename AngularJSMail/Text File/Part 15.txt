@@ -1,0 +1,23 @@
+
+Part15:- ui-router
+What is ui-router
+The UI-Router is a third party routing framework for AngularJS. 
+It provides everything that the ngRoute module provides plus many additional features. These additional features are very useful for larger applications.
+ui-router implements routing based on the state of the application where as ngRoute implements routing based on the route URL. 
+According to angular documentation, a state corresponds to a "place" in the application.  
+
+CDN Link:-
+https://cdnjs.com/libraries/angular-ui-router
+
+To configure a state use state() method of $stateProvider service. state() method has 2 parameters
+i) name - A unique state name, e.g. "home", "courses", "students"
+ii) stateConfig - State configuration object
+
+
+State configuration object has several properties. Some of them are listed below.
+template
+templateUrl
+controller
+controllerAs
+resolve
+url

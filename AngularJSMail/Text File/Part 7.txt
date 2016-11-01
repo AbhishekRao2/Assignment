@@ -1,0 +1,32 @@
+Part7:- ng-hide and ng-show in AngularJS N AngularJS ng-init directive N Consuming ASP.NET Web Service in AngularJS using $http
+
+ng-hide and ng-show directives are used to control the visibility of the HTML elements.
+
+The ng-init directive allows you to evaluate an expression in the current scope.  
+In the following example, the ng-init directive initializes employees variable which is then used in the ng-repeat directive to loop thru each employee. In a real world application you should use a controller instead of ng-init to initialize values on a scope. 
+
+
+
+ng-init should only be used for aliasing special properties of ng-repeat directive. 
+
+$http service.
+In Angular there are several built in services. $http service is one of them. 
+$http service in Angular is used to make HTTP requests to remote server 
+$http service is a function that has a single input parameter i.e a configuration object.
+$http({
+    method: 'GET',
+    url: 'EmployeeService.asmx/GetAllEmployees'
+});
+
+Using the short cut method get()
+$http.get('EmployeeService.asmx/GetAllEmployees')
+
+$http service returns a promise object. This means the functions are executed asynchronously and the data that these functions return may not be available immediately. 
+
+$scope.employees = $http.get('EmployeeService.asmx/GetAllEmployee')
+                        .then(function (response) {
+                            $scope.employees = response.data;
+                        }, function (reason) {
+                            $scope.error = reason.data;
+                        });
+

@@ -1,0 +1,17 @@
+﻿
+
+
+
+<h1>List of Students</h1>
+<ul>
+    <li ng-repeat="student in studentsCtrl.students">
+        <a ui-sref="studentDetails({id: student.id})">
+            {{student.name}}
+        </a>
+    </li>
+</ul>
+
+
+
+
+

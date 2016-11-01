@@ -1,0 +1,36 @@
+
+
+Part3:- ng-src directive  N Two way databinding (ng-model) N ng-repeat:-
+
+Reason for the 404 error
+As soon as the DOM is parsed, an attempt is made is to fetch the image from the server. At this point, AngularJS binding expression that is specified with the src attribute is not evaluated. Hence 404 (not found) error.
+
+Fix:-
+ng-src attribute ensures that a request is issued only after AngularJS has evaluated the binding expression 
+
+
+
+
+
+ng-model directive:-
+ng-model directive automatically takes the form values and updates the model. 
+The binding expression does the opposite, i.e whenever the model changes the view is automatically updated. 
+
+
+ng-model directive can be used with the following 3 html elements
+input 
+select
+textarea
+
+
+
+
+ng-repeat:-
+ng-repeat is similar to foreach loop in C#.  
+
+
+Finding the index of an item in the collection : -
+To find the index of an item in the collection use $index property
+To get the index of the parent element
+Use $parent.$index or
+Use ng-init="parentIndex = $index"

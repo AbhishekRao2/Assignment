@@ -1,0 +1,21 @@
+
+Part16:- ui router parameters N Case sensitivity with angularjs ui-router  N set a default route when using ui-router 
+how to use url parameters with ui router in angular.
+
+
+how to make routes that are configured using ui-router case-insensitive. :-
+1) The routes that are configured using ui-router are case sensitive by default.
+2) To make the routes case-insensitive inject $urlMatcherFactoryProvider service into the config() function and call caseInsensitive(true) function passing a value of true.
+ var app = angular
+            .module("Demo", ["ui.router"])
+            .config(function ($urlMatcherFactoryProvider) {
+                $urlMatcherFactoryProvider.caseInsensitive(true);
+            })
+
+
+
+To configure the default route when you we are using ui-router inject $urlRouterProvider service into the config() function and use otherwise() function passing it the default route.
+
+.config(function ($urlRouterProvider) {
+    $urlRouterProvider.otherwise("/home");
+})

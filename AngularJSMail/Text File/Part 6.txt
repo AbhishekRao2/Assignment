@@ -1,0 +1,7 @@
+
+Part6:- Angularjs filter by multiple properties N custom filter
+
+Custom filter in AngularJS
+1. Is a function that returns a function
+2. Use the filter function to create a custom filter 
+

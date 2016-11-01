@@ -1,0 +1,21 @@
+
+Part9:- anchorscroll N Angular-route
+
+
+$anchorscroll service is used to jump to a specified element on the page
+$location service hash method appends hash fragments to the URL
+$anchorscroll() method reads the hash fragment in the URL and jumps to that element on the page
+yOffset property specifies the vertical scroll-offset
+
+
+Angular-route:-
+Preparing the angular application to use routing:- The AngularJS Route module is present in a separate JavaScript file. 
+
+
+
+
+
+Please note : 
+1. The partial templates (home.html, courses.html & students.html) will be injected into the location where we have ng-view directive. 
+2. For linking to partial templates we are using # symbol in the href attribute. This tells the browser not to navigate away from index.html.
+

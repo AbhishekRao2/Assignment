@@ -1,0 +1,27 @@
+Part18:- nested views N multiple named views  N difference between ngroute and ui-router
+One of the benefits of ui-router over ngRoute is that it provides support for nested states and views. 
+Nested states have parent child relationship. 
+This means properties of the parent state are available to the child state. 
+There are several methods for nesting states. 
+The following are the 2 common methods.
+
+1. Using 'dot notation'. In the example below "students" is a child of "studentParent" state. Notice in the child state name "studentParent.students" we are using . (DOT)
+
+.state("studentParent", {
+    // parent state config properties
+})
+.state("studentParent.students", {
+    // child state config properties
+})
+
+2. Using the parent property with the parent name as string. In the example below, we are using parent property in the child state to specify who the parent is for this state.
+
+.state("studentParent", {
+    // parent state config properties
+})
+.state("students", {
+    parent: "studentParent",
+    // child state config properties
+})
+
+

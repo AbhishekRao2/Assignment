@@ -1,0 +1,39 @@
+Part17:- ui router custom data N ui router html5mode N active state css 
+To add custom data to a state use data property.
+ data: {
+            customData1: "Home State Custom Data 1",
+            customData2: "Home State Custom Data 2"
+        }
+
+The custom data is now available in all the controllers. 
+To access state custom data from it's controller (i.e to access home state data from home controller) use $state.current.data.customPropertyName. 
+To access state custom data from a different controller (i.e to access courses state data from home controller) use $state.get("statename").data.customPropertyName. 
+
+
+
+ui router html5mode:-
+Step 1 : Enable html5mode routing.
+$locationProvider.html5Mode(true);
+
+Step 2 : Remove # symbols from the URLs if there are any.
+
+Step 3 : Include the following URL rewrite rule in web.config.
+
+Step 4 : Set the base href to the location of your single page application. In the head section of index.html include the following line.
+<base href="/" />
+
+
+
+
+
+
+Step 1 : Create a CSS class that you want to be applied when a state is active.
+ .activeState{
+    background-color:black;
+    color:white
+}
+
+Step 2 : Modify links ui-sref="home" ui-sref-active="activeState">Home</a>
+example:- 16-->HtmlPage1.html
+
+

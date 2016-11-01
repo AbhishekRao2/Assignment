@@ -1,0 +1,39 @@
+How?
+=============================================================
+
+part1:- My first AngularJS page
+
+To get started with angular
+1. Add a reference to the angular script
+	https://angularjs.org/
+
+2. Include ng-app attribute 
+
+what is Directives:-
+AngularJS directives are used to extend HTML. These are special attributes starting with ng- prefix. 
+AngularJS has a set of built-in directives which offers functionality to your applications.
+AngularJS also lets you define your own directives.
+eg:- ng-app, ng-repeat, ng-src etc
+
+At a high level, directives are markers on a DOM element (such as an attribute, element name, CSS class) that tell AngularJS's HTML compiler ($compile) to attach a specified behavior to that DOM element (e.g. via event listeners), or even to transform the DOM element and its children.
+
+
+What is ng-app 
+In angular, ng-app is called a directive. 
+The ng prefix in the directive stands for angular. 
+The ng-app directive is a starting point of AngularJS Application.  
+Angular framework will first check for ng-app directive in an HTML page after the entire page is loaded. If ng-app directive is found, angular bootstraps itself and starts to manage the section of the page that has the ng-app directive. 
+
+
+Binding Expressions:-
+Double curly braces are called binding expressions in angular.
+
+
+Example:-
+
+{{ 1 == 1 }} - Evaluates to true
+{{ { name: 'David', age : '30' }.name }} - Returns the name property value
+{{ ['Mark', 'David', 'Sara'][2] }} - Returns the 2nd element from the array  
+
+
+
